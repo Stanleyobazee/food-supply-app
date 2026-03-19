@@ -1,0 +1,88 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; background: #f5f5f5; color: #333; }
+
+.header {
+  background: #2e7d32;
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 { font-size: 1.4rem; }
+.header input {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  width: 220px;
+  font-size: 0.9rem;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+  padding: 16px 24px;
+  overflow-x: auto;
+}
+.category {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 6px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+.category.active { border-color: #2e7d32; color: #2e7d32; font-weight: bold; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 0 24px 100px;
+}
+.empty { padding: 24px; text-align: center; color: #888; }
+
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.card img { width: 100%; height: 140px; object-fit: cover; }
+.card-body { padding: 12px; }
+.card-body h3 { font-size: 1rem; margin-bottom: 4px; }
+.card-body .meta { font-size: 0.8rem; color: #888; margin-bottom: 10px; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
+.price { font-weight: bold; color: #2e7d32; }
+.btn {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn:hover { background: #1b5e20; }
+
+.cart-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #2e7d32;
+  color: white;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+.cart-bar button {
+  background: white;
+  color: #2e7d32;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
