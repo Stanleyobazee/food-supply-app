@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import ProductGrid from "./components/ProductGrid";
 import CartBar from "./components/CartBar";
+import ChatBot from "./components/ChatBot";
 import products from "./data/products";
 import "./index.css";
 
@@ -25,6 +26,7 @@ export default function App() {
       <Categories active={activeCategory} onSelect={setActiveCategory} />
       <ProductGrid products={filtered} onAdd={() => setCartCount((c) => c + 1)} />
       <CartBar count={cartCount} />
+      <ChatBot />
     </>
   );
 }
