@@ -1,6 +1,6 @@
 # 🥦 Food Supply App
 
-A React-based web application that allows users to browse nearby food suppliers, search and filter products by category, and manage a shopping cart — all from a clean, responsive interface.
+A React-based web application that allows users to browse nearby food suppliers, search and filter products by category, manage a shopping cart, and get instant help via a built-in chatbot assistant — all from a clean, responsive interface.
 
 ---
 
@@ -10,6 +10,7 @@ A React-based web application that allows users to browse nearby food suppliers,
 - **Category Filtering** — Filter products by category: Vegetables, Fruits, Dairy, Grains, Meat, Seafood
 - **Live Search** — Search products by name or supplier in real time
 - **Cart Management** — Add items to cart with a live item count displayed in a fixed bottom bar
+- **Chatbot Assistant** — A floating chat widget with auto-reply support for product, price, supplier, and delivery queries
 
 ---
 
@@ -34,7 +35,8 @@ food-supply-app/
 │   │   ├── Categories.jsx   # Category filter pill buttons
 │   │   ├── ProductGrid.jsx  # Responsive product grid layout
 │   │   ├── ProductCard.jsx  # Individual product card (image, name, price, add button)
-│   │   └── CartBar.jsx      # Fixed bottom bar showing cart item count
+│   │   ├── CartBar.jsx      # Fixed bottom bar showing cart item count
+│   │   └── ChatBot.jsx      # Floating chatbot widget with auto-reply logic
 │   ├── data/
 │   │   └── products.js      # Mock product data (id, name, supplier, price, category, image)
 │   ├── App.jsx              # Root component — manages state and filtering logic
@@ -116,6 +118,29 @@ Products are defined in `src/data/products.js`. To add a new product, append an 
 ```
 
 Valid category values: `Vegetables`, `Fruits`, `Dairy`, `Grains`, `Meat`, `Seafood`
+
+---
+
+## Chatbot Auto-Reply
+
+The chatbot widget is accessible via the 💬 button fixed at the bottom-right of the screen. It responds automatically to common user queries.
+
+| Topic | Example Query |
+|-------|---------------|
+| Greeting | `hi`, `hello` |
+| Categories | `vegetables`, `fruits`, `dairy`, `meat`, `seafood`, `grains` |
+| Pricing | `price`, `cost`, `cheap` |
+| Suppliers | `supplier` |
+| Cart & Orders | `cart`, `order` |
+| Delivery | `delivery`, `shipping` |
+| Farewell | `bye`, `thanks` |
+
+To add new auto-reply rules, edit the `autoReply` function in `src/components/ChatBot.jsx`:
+
+```js
+if (text.includes("organic"))
+  return "🌱 All our vegetables are organically sourced from certified farms!";
+```
 
 ---
 
