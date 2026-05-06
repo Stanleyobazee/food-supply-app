@@ -2,7 +2,8 @@
 
 A React-based web application that allows users to browse nearby food suppliers, search and filter products by category, manage a shopping cart, and get instant help via a built-in chatbot assistant — all from a clean, responsive interface.
 
-🌐 **Live at:** [http://www.cloud-itgen.de](http://www.cloud-itgen.de)
+🌐 **Live at:** [https://www.cloud-itgen.de](https://www.cloud-itgen.de)
+🐳 **Docker Hub:** [stanley80/food-supply-app](https://hub.docker.com/r/stanley80/food-supply-app)
 
 ---
 
@@ -251,9 +252,33 @@ docker rmi food-supply-app       # remove the image
 
 ---
 
+## Pushing Docker Image to Docker Hub
+
+### 1. Login to Docker Hub
+
+```bash
+docker login
+```
+
+### 2. Tag the image
+
+```bash
+docker tag food-supply-app <your-dockerhub-username>/food-supply-app:latest
+```
+
+### 3. Push the image
+
+```bash
+docker push <your-dockerhub-username>/food-supply-app:latest
+```
+
+Verify at **https://hub.docker.com**.
+
+---
+
 ## Deployment — AWS EC2 + Docker
 
-The app can be deployed on EC2 using Docker instead of nginx directly.
+With the image on Docker Hub, you can deploy on EC2 without cloning the repo or building locally.
 
 ### 1. SSH into your EC2 instance
 
@@ -269,27 +294,69 @@ sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-### 3. Clone the repository
+### 3. Pull and run the image from Docker Hub
 
 ```bash
-git clone <your-repo-url>
-cd <your-project-directory>
+docker pull stanley80/food-supply-app:latest
+docker run -d -p 3000:80 stanley80/food-supply-app:latest
 ```
 
-### 4. Build and run
-
-```bash
-docker build -t food-supply-app .
-docker run -d -p 80:80 food-supply-app
-```
-
-### 5. Verify
+### 4. Verify
 
 ```bash
 docker ps
 ```
 
-Open **http://www.cloud-itgen.de** in your browser.
+### 5. Add HTTPS with nginx + Certbot
+
+Install nginx as a reverse proxy in front of Docker:
+
+```bash
+sudo apt install -y nginx
+```
+
+Configure nginx:
+
+```bash
+sudo nano /etc/nginx/sites-available/default
+```
+
+Replace contents with:
+
+```nginx
+server {
+    listen 80;
+    server_name cloud-itgen.de www.cloud-itgen.de;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+Restart nginx:
+
+```bash
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+Install Certbot and add SSL:
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d cloud-itgen.de -d www.cloud-itgen.de
+```
+
+Verify auto-renewal:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+Open **https://www.cloud-itgen.de** in your browser.
 
 ---
 
